@@ -1,0 +1,113 @@
+---
+title: "Adv Data Science"
+author: "Eisley Adoremos"
+date: "May 2, 2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(gghighlight)
+
+nbastats <- read.csv("https://raw.githubusercontent.com/eisleyadore/JordanVsPresent/master/nbastats.csv",
+                     fileEncoding="UTF-8-BOM")
+
+allstats <- read.csv("https://raw.githubusercontent.com/eisleyadore/JordanVsPresent/master/allstats.csv",
+                     fileEncoding="UTF-8-BOM")
+
+```
+
+#Average Points
+```{r}
+ggplot(allstats, aes(x = Year, y = PTS, color = Player)) +
+  geom_line() +
+  gghighlight(mean(PTS) > 27, label_key = Player) +
+  ylab("Average Points Per Game") +
+  ggtitle("Points")  +
+  scale_x_discrete(name ="Year", 
+                   limits=c(1,2,3))
+```
+
+#Assists
+```{r}
+ggplot(allstats, aes(x = Year, y = AST, color = Player)) +
+  geom_line() +
+  gghighlight(mean(AST) > 6 || Player == "Michael Jordan", label_key = Player) +
+  ylab("Average Assists Per Game") +
+  ggtitle("Assists")  +
+  scale_x_discrete(name ="Year", 
+                   limits=c(1,2,3))
+  
+```
+
+#Rebounds
+```{r}
+ggplot(allstats, aes(x = Year, y = REB, color = Player)) +
+  geom_line() +
+  gghighlight(mean(REB) > 10 || Player == "Michael Jordan", label_key = Player) +
+  ylab("Average Rebounds Per Game") +
+  ggtitle("Rebounds") +
+  scale_x_discrete(name ="Year", 
+                   limits=c(1,2,3))
+```
+
+#Steals
+
+```{r}
+ggplot(allstats, aes(x = Year, y = STL, color = Player)) +
+  geom_line() +
+  gghighlight(max(STL) >= 2 || Player == "Michael Jordan", label_key = Player) +
+  ylab("Average Steals Per Game") +
+  ggtitle("Steals") +
+  scale_x_discrete(name ="Year", 
+                   limits=c(1,2,3))
+```
+
+#Blocks
+```{r}
+ggplot(allstats, aes(x = Year, y = BLK, color = Player)) +
+  geom_line() +
+  gghighlight(max(BLK) > 1.5 || Player == "Michael Jordan", label_key = Player) +
+  ylab("Average Blocks Per Game") +
+  ggtitle("Blocks") +
+  scale_x_discrete(name ="Year", 
+                   limits=c(1,2,3))
+```
+
+#Minutes
+```{r}
+ggplot(allstats, aes(x = Year, y = MIN, color = Player)) +
+  geom_line() +
+  gghighlight(mean(MIN) > 36 || Player == "Michael Jordan", label_key = Player) +
+  ylab("Average Minutes Per Game") +
+  ggtitle("Minutes") +
+  scale_x_discrete(name ="Year", 
+                   limits=c(1,2,3))
+```
+
+#3PM
+```{r}
+ggplot(allstats, aes(x = Year, y = THREEPM, color = Player)) +
+  geom_line() +
+  gghighlight(mean(THREEPM) > 3 || Player == "Michael Jordan", label_key = Player) +
+  ylab("Three Points Made per Game") +
+  ggtitle("Three Points Made")  +
+  scale_x_discrete(name ="Year", 
+                   limits=c(1,2,3))
+```
+
+
+#3PA
+```{r}
+ggplot(allstats, aes(x = Year, y = THREEPA, color = Player)) +
+  geom_line() +
+  gghighlight(max(THREEPA) > 8 || Player == "Michael Jordan", label_key = Player) +
+  scale_x_discrete(name ="Year", 
+                   limits=c(1,2,3)) +
+  ylab("Three Point Attemps per Game") +
+  ggtitle("Three Points per Game")
+```
